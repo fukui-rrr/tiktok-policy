@@ -1,34 +1,45 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <title>TikTok OAuth Demo</title>
+  <meta charset="UTF-8">
+  <title>TikTok Login Demo</title>
 </head>
 <body>
-  <h1>TikTokログインテスト</h1>
+  <h1>TikTokでログイン（最新版）</h1>
   <button id="loginBtn">TikTokでログイン</button>
   <pre id="output"></pre>
 
   <script>
-    const clientKey = "awt2kvho9o1pzxx7"; 
-    const redirectUri = "https://fukui-rrr.github.io/tiktok-policy/demo.html"; 
+    const clientKey = "awt2kvho9o1pzxx7"; // あなたのClient Key
+    const redirectUri = "https://fukui-rrr.github.io/tiktok-policy/demo.html"; // TikTokに登録したURI
     const scope = "user.info.basic";
 
+    function generateState(length = 16) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+
     document.getElementById("loginBtn").addEventListener("click", () => {
-      const authUrl = `https://www.tiktok.com/auth/authorize/` +
+      const state = generateState();
+      const authUrl = `https://www.tiktok.com/v2/auth/authorize/` +
         `?client_key=${clientKey}` +
         `&scope=${encodeURIComponent(scope)}` +
         `&response_type=code` +
         `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-        `&state=demo123`;
+        `&state=${state}`;
       window.location.href = authUrl;
     });
 
+    // 認可コード取得
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
     if (code) {
       document.getElementById("output").textContent =
-        `認可コードを取得しました:\n${code}`;
+        `取得した認可コード:\n${code}\n\nこのコードを使ってサーバー側でアクセストークンを取得してください。`;
     }
   </script>
 </body>
