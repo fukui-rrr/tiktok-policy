@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TikTok Login Demo</title>
+  <meta charset="UTF-8" />
+  <title>TikTok OAuth Demo</title>
 </head>
 <body>
-  <h1>TikTokでログイン（デモ）</h1>
+  <h1>TikTokログインテスト</h1>
   <button id="loginBtn">TikTokでログイン</button>
-
   <pre id="output"></pre>
 
   <script>
-    // ======= 設定 =======
-    const clientKey = "awt2kvho9o1pzxx7"; // TikTok Developer Portalで発行されたClient Key
-    const redirectUri = "https://fukui-rrr.github.io/tiktok-policy/demo.html"; // 自分の環境のURLに合わせる
-    const scope = "user.info.basic"; // 必要最低限の権限
+    const clientKey = "awt2kvho9o1pzxx7"; 
+    const redirectUri = "https://fukui-rrr.github.io/tiktok-policy/demo.html"; 
+    const scope = "user.info.basic";
 
-    // ログインボタンクリック時
     document.getElementById("loginBtn").addEventListener("click", () => {
       const authUrl = `https://www.tiktok.com/auth/authorize/` +
         `?client_key=${clientKey}` +
@@ -28,13 +24,11 @@
       window.location.href = authUrl;
     });
 
-    // URLに認可コードがある場合、表示（審査用）
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
     if (code) {
       document.getElementById("output").textContent =
-        `取得した認可コード（審査用表示）:\n${code}\n\n` +
-        `※このコードを使ってアクセストークンを取得できます（サーバー側処理推奨）`;
+        `認可コードを取得しました:\n${code}`;
     }
   </script>
 </body>
