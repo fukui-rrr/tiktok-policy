@@ -2,45 +2,23 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TikTok Login Demo</title>
 </head>
 <body>
-  <h1>TikTokでログイン（最新版）</h1>
+  <h1>TikTokでログイン</h1>
   <button id="loginBtn">TikTokでログイン</button>
-  <pre id="output"></pre>
 
   <script>
-    const clientKey = "sbawycgi05v42vjdfh"; // あなたのClient Key
-    const redirectUri = "https://tiktok-policy.vercel.app/callback"; // TikTokに登録したURI
-    const scope = "user.info.basic";
-
-    function generateState(length = 16) {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return result;
-    }
+    // === 必ず変更する箇所 ===
+    const CLIENT_KEY = "sbawycgi05v42vjdfh"; // ### CHANGE HERE ### 自分のClient Key
+    const REDIRECT_URI = "https://あなたのドメイン.vercel.app/callback"; // ### CHANGE HERE ###
+    const SCOPE = "user.info.basic"; // 必要なScopeをカンマ区切りで追加可能
 
     document.getElementById("loginBtn").addEventListener("click", () => {
-      const state = generateState();
-      const authUrl = `https://www.tiktok.com/v2/auth/authorize/` +
-        `?client_key=${clientKey}` +
-        `&scope=${encodeURIComponent(scope)}` +
-        `&response_type=code` +
-        `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-        `&state=${state}`;
+      const authUrl = `https://www.tiktok.com/v2/auth/authorize/?client_key=${CLIENT_KEY}&scope=${encodeURIComponent(SCOPE)}&response_type=code&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&state=randomstring123`;
       window.location.href = authUrl;
     });
-
-    // 認可コード取得
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get("code");
-    if (code) {
-      document.getElementById("output").textContent =
-        `取得した認可コード:\n${code}\n\nこのコードを使ってサーバー側でアクセストークンを取得してください。`;
-    }
   </script>
 </body>
 </html>
