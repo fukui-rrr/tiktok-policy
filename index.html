@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="UTF-8"><title>TikTokログインデモ</title></head>
+<body>
+  <h1>TikTokでログイン（デモ簡単）</h1>
+  <button id="loginBtn">TikTokでログイン</button>
+  <pre id="output"></pre>
+
+  <script>
+    const CLIENT_KEY = "sbawycgi05v42vjdfh"; // ### CHANGE HERE ###
+    const REDIRECT_URI = "https://tiktok-policy.vercel.app/demo.html";
+    const SCOPE = "user.info.basic";
+
+    document.getElementById("loginBtn").onclick = () => {
+      const state = Math.random().toString(36).slice(2);
+      const url = `https://www.tiktok.com/v2/auth/authorize/?client_key=${CLIENT_KEY}&scope=${SCOPE}&response_type=code&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&state=${state}`;
+      window.location.href = url;
+    };
+
+    // 認可コードをURLから取得して表示
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    if (code) {
+      document.getElementById("output").textContent = "認可コードを取得しました:\n" + code + "\n\nこれを使ってAPI連携します。";
+    }
+  </script>
+</body>
+</html>
