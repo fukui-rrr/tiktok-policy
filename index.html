@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head><meta charset="UTF-8"><title>TikTokログインデモ</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>TikTokログインデモ（審査用）</title>
+</head>
 <body>
-  <h1>TikTokでログイン（デモ簡単）</h1>
+  <h1>TikTokでログイン（審査用デモ）</h1>
   <button id="loginBtn">TikTokでログイン</button>
   <pre id="output"></pre>
 
   <script>
-    const CLIENT_KEY = "sbawn4qvq8y04wbw99"; // ### CHANGE HERE ###
-    const REDIRECT_URI = "https://tiktok-policy.vercel.app/index.html";
+    // ===== ここを自分のSandbox Client Keyに置き換え =====
+    const CLIENT_KEY = "sbawn4qvq8y04wbw99";
+    // ===== ここを自分のGitHub PagesのURLに置き換え =====
+    const REDIRECT_URI = "https://fukui-rrr.github.io/tiktok-policy/index.html";
+
     const SCOPE = "user.info.basic";
 
     document.getElementById("loginBtn").onclick = () => {
@@ -17,11 +23,11 @@
       window.location.href = url;
     };
 
-    // 認可コードをURLから取得して表示
+    // 認可コード取得表示
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
     if (code) {
-      document.getElementById("output").textContent = "認可コードを取得しました:\n" + code + "\n\nこれを使ってAPI連携します。";
+      document.getElementById("output").textContent = "認可コードを取得しました:\n" + code;
     }
   </script>
 </body>
